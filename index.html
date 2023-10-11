@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Paylaşım Alanı</title>
+  <style>
+    #container {
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <input type="text" id="textInput" placeholder="Metin girin">
+    <button id="postButton">Paylaş</button>
+    <button id="clearButton">Temizle</button>
+    <div id="postList"></div>
+  </div>
+
+  <script>
+    const textInput = document.getElementById('textInput');
+    const postButton = document.getElementById('postButton');
+    const clearButton = document.getElementById('clearButton');
+    const postList = document.getElementById('postList');
+    const localStorageKey = 'sharedText';
+
+    // Sayfa yüklendiğinde, daha önce kaydedilmiş metni alın ve ekranda gösterin.
+    const savedText = localStorage.getItem(localStorageKey);
+    if (savedText) {
+      postList.textContent = savedText;
+    }
+
+    postButton.addEventListener('click', () => {
+      const text = textInput.value;
+      if (text.trim() !== '') {
+        // Metni kaydet ve ekranda göster
+        postList.textContent = text;
+        localStorage.setItem(localStorageKey, text);
+      }
+    });
+
+    clearButton.addEventListener('click', () => {
+      // Metni temizle ve yerel depodan kaldır
+      postList.textContent = '';
+      localStorage.removeItem(localStorageKey);
+    });
+  </script>
+</body>
+</html>
